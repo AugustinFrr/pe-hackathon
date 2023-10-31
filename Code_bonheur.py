@@ -53,4 +53,3 @@ df = pd.read_excel('Data.xls')
 df['Id'] = df['Country name'] + df['year'].map(str)
 print(df.head(8))
 
-#fonction du bonheur
