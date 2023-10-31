@@ -66,8 +66,6 @@ df['Negative affect Normalized'] = 1 - (df['Negative affect'] - minNA)/(maxNA -m
 
 
 #fonction du bonheur
-def valeur_bonheur(df, pays, année, a,b,c,d,e,f,g,h,i):
-    return df.loc[pays.map(str) + année.map(str), 'Life Ladder Normalized']
 
 
 
