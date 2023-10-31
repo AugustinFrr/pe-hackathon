@@ -4,25 +4,19 @@
 
 
 
-# 3e partie
-# Comparaison de 2 pays à partir de l'excel 'Data.xls'
-# Création d'une fonction qui prend pour argument 2 pays et éventuellement une liste de critères et renvoie un graphique comparatif
-#Colonnes = ['Life Ladder', 'Log GDP per capita', 'Social support', 'Healthy life expectancy at birth', 'Freedom to make life choices', 'Generosity', 'Perceptions of corruption', 'Positive affect', 'Negative affect']
+Colonnes = ['Life Ladder  Normalized', 'Log GDP per capita Normalized', 'Social support Normalized', 'Healthy life expectancy at birth Normalized', 'Freedom to make life choices Normalized', 'Generosity Normalized', 'Perceptions of corruption Normalized', 'Positive affect Normalized', 'Negative affect Normalized']
 
 # importation des modules
 import pandas as pd
 import matplotlib.pyplot as plt
 df = pd.read_excel('Data.xls')
 
+# 1ere partie 
+# normalisation des données, création d'un index
 
-#adélie
-
-#pour rajouter la colonne Id:
+#pour rajouter la colonne Id et en faire un index :
 df['Id'] = df['Country name'] + df['year'].map(str)
-
 df.set_index('Id', inplace=True)
-
-
 
 # colonne Life Ladder
 maxLl = df['Life Ladder'].max(skipna = True)
@@ -59,6 +53,11 @@ maxPA = df['Positive affect'].max(skipna = True)
 minPA = df['Positive affect'].min(skipna = True)
 df['Positive affect Normalized'] = (df['Positive affect'] - minPA)/(maxPA -minPA)
 
+# colonne Generosity
+maxPA = df['Generosity'].max(skipna = True)
+minPA = df['Generosity'].min(skipna = True)
+df['Generosity Normalized'] = (df['Generosity'] - minPA)/(maxPA -minPA)
+
 # colonne Negative affect
 maxNA = df['Negative affect'].max( skipna = True)
 minNA = df['Negative affect'].min( skipna = True)
@@ -76,27 +75,38 @@ def valeur_bonheur(pays, année, a,b,c,d,e,f,g,h,i):
     
 
 #test fonction bonheur
-
-valeur_bonheur(df, 'Albanie' , '2018', 1/9 , 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9)
-
+#valeur_bonheur(df, 'Albanie' , '2018', 1/9 , 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9)
 
 
-#augustin
+
+
+# 3e partie
+# Comparaison de 2 pays à partir de l'excel 'Data.xls'
+# Création d'une fonction qui prend pour argument 2 pays et éventuellement une liste de critères et renvoie un graphique comparatif
+# On peut choisir les critères à comparer parmi les colonnes du fichier excel 'Data.xls' ou la liste Colonnes initialisée au début du code
 
 def comparateur(Id1, Id2, annee, liste_critères = None):
+    '''
+    Fonction qui prend en argument 2 pays, une année et éventuellement une liste de critères et renvoie un histogramme comparatif des 2 pays
+    '''
+
     if liste_critères == None:
         liste_critères = Colonnes
     Id1 = Id1 + str(annee)
     Id2 = Id2 + str(annee)
-    i=0
-    for critère in liste_critères:
-        plt.figure(figsize=(10,5))
-        plt.bar(i,df.loc[Id1,critère], label=Id1, alpha=0.5)
-        plt.bar(i,df.loc[Id2,critère], label=Id2, alpha=0.5)
-        i += 1
-        plt.xlabel('Année')
-        plt.ylabel(critère)
-        plt.legend()
-        plt.show()
+    
+    valeurs_Id1 = [df.loc[Id1, critère] for critère in liste_critères]
+    valeurs_Id2 = [df.loc[Id2, critère] for critère in liste_critères]
+    
+    x = range(len(liste_critères))
+    
+    plt.figure(figsize=(10,5))
+    plt.bar([i-0.2 for i in x], valeurs_Id1, label=Id1, width=0.4)
+    plt.bar([i+0.2 for i in x], valeurs_Id2, label=Id2, width=0.4)
+    plt.xticks(x, liste_critères, rotation='vertical')
+    plt.ylabel('Valeur')
+    plt.legend()
+    plt.show()
 
-comparateur('Afghanistan', 'Albania', 2018, ['Life Ladder', 'Log GDP per capita', 'Social support', 'Healthy life expectancy at birth', 'Freedom to make life choices', 'Generosity', 'Perceptions of corruption', 'Positive affect', 'Negative affect'])
+# test fonction comparateur
+# comparateur('Afghanistan', 'Albania', 2018, ['Life Ladder Normalized', 'Healthy life expectancy at birth Normalized', 'Generosity Normalized', 'Perceptions of corruption Normalized', 'Negative affect Normalized'])
