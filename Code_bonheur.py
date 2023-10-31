@@ -81,7 +81,7 @@ def comparateur(Id1, Id2, annee, liste_critères = None):
     '''
     Fonction qui prend en argument 2 pays, une année et éventuellement une liste de critères et renvoie un histogramme comparatif des 2 pays
     '''
-    
+
     if liste_critères == None:
         liste_critères = Colonnes
     Id1 = Id1 + str(annee)
@@ -100,4 +100,4 @@ def comparateur(Id1, Id2, annee, liste_critères = None):
     plt.legend()
     plt.show()
 
-comparateur('Afghanistan', 'Albania', 2018, ['Life Ladder Normalized', 'Log GDP per capita Normalized', 'Social support Normalized', 'Healthy life expectancy at birth Normalized', 'Freedom to make life choices Normalized', 'Generosity Normalized', 'Perceptions of corruption Normalized', 'Positive affect Normalized', 'Negative affect Normalized'])
+comparateur('Afghanistan', 'Albania', 2018, ['Life Ladder Normalized', 'Healthy life expectancy at birth Normalized', 'Generosity Normalized', 'Perceptions of corruption Normalized', 'Negative affect Normalized'])
