@@ -14,12 +14,9 @@ df = pd.read_excel('Data.xls')
 # 1ere partie 
 # normalisation des données, création d'un index
 
-#pour rajouter la colonne Id:
+#pour rajouter la colonne Id et en faire un index :
 df['Id'] = df['Country name'] + df['year'].map(str)
-
 df.set_index('Id', inplace=True)
-
-
 
 # colonne Life Ladder
 maxLl = df['Life Ladder'].max(skipna = True)
