@@ -4,6 +4,7 @@
 ##partie Agathe: faire une araignée pour un pays
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
 from matplotlib.patches import Circle, RegularPolygon
 from matplotlib.path import Path
