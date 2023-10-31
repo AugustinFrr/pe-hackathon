@@ -1,8 +1,28 @@
+# 
+
+
+
+
+
+# 3e partie
+# Comparaison de 2 pays à partir de l'excel 'Data.xls'
+# Création d'une fonction qui prend pour argument 2 pays et éventuellement une liste de critères et renvoie un graphique comparatif
+#Colonnes = ['Life Ladder', 'Log GDP per capita', 'Social support', 'Healthy life expectancy at birth', 'Freedom to make life choices', 'Generosity', 'Perceptions of corruption', 'Positive affect', 'Negative affect']
+
+# importation des modules
+import pandas as pd
+import matplotlib.pyplot as plt
+df = pd.read_excel('Data.xls')
+
+
 #adélie
 
-import pandas as pd
+#pour rajouter la colonne Id:
+df['Id'] = df['Country name'] + df['year'].map(str)
 
-df = pd.read_excel('Data.xls')
+df.set_index('Id', inplace=True)
+
+
 
 # colonne Life Ladder
 maxLl = df['Life Ladder'].max(skipna = True)
@@ -44,12 +64,39 @@ maxNA = df['Negative affect'].max( skipna = True)
 minNA = df['Negative affect'].min( skipna = True)
 df['Negative affect Normalized'] = 1 - (df['Negative affect'] - minNA)/(maxNA -minNA)
 
-#print(df.head(8))
+maxNA = df['Generosity'].max( skipna = True)
+minNA = df['Generosity'].min( skipna = True)
+df['Generosity Normalized'] = 1 - (df['Generosity'] - minNA)/(maxNA -minNA)
 
-#pour rajouter la colonne Id:
+#fonction du bonheur
+def valeur_bonheur(pays, année, a,b,c,d,e,f,g,h,i):
+    index = pays + année
+    bonheur =  a*df.loc[index, 'Life Ladder Normalized'] + b*df.loc[index, 'Log GDP per capita Normalized'] +c*df.loc[index, 'Social support Normalized']+d*df.loc[index, 'Healthy life expectancy at birth Normalized']+e*df.loc[index, 'Freedom to make life choices Normalized']+f*df.loc[index, 'Generosity Normalized']+g*df.loc[index, 'Perceptions of corruption Normalized']+h*df.loc[index, 'Positive affect Normalized']+i*df.loc[index, 'Negative affect Normalized']
+    return bonheur
+    
 
-import pandas as pd
-df = pd.read_excel('Data.xls')
-df['Id'] = df['Country name'] + df['year'].map(str)
-print(df.head(8))
+#test fonction bonheur
 
+valeur_bonheur(df, 'Albanie' , '2018', 1/9 , 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9)
+
+
+
+#augustin
+
+def comparateur(Id1, Id2, annee, liste_critères = None):
+    if liste_critères == None:
+        liste_critères = Colonnes
+    Id1 = Id1 + str(annee)
+    Id2 = Id2 + str(annee)
+    i=0
+    for critère in liste_critères:
+        plt.figure(figsize=(10,5))
+        plt.bar(i,df.loc[Id1,critère], label=Id1, alpha=0.5)
+        plt.bar(i,df.loc[Id2,critère], label=Id2, alpha=0.5)
+        i += 1
+        plt.xlabel('Année')
+        plt.ylabel(critère)
+        plt.legend()
+        plt.show()
+
+comparateur('Afghanistan', 'Albania', 2018, ['Life Ladder', 'Log GDP per capita', 'Social support', 'Healthy life expectancy at birth', 'Freedom to make life choices', 'Generosity', 'Perceptions of corruption', 'Positive affect', 'Negative affect'])
