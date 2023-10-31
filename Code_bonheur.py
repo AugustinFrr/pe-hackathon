@@ -44,4 +44,13 @@ maxNA = df['Negative affect'].max( skipna = True)
 minNA = df['Negative affect'].min( skipna = True)
 df['Negative affect Normalized'] = 1 - (df['Negative affect'] - minNA)/(maxNA -minNA)
 
+#print(df.head(8))
+
+#pour rajouter la colonne Id:
+
+import pandas as pd
+df = pd.read_excel('Data.xls')
+df['Id'] = df['Country name'] + df['year'].map(str)
 print(df.head(8))
+
+#fonction du bonheur
