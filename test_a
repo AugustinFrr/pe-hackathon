@@ -1,13 +1,3 @@
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-
-def load_data(filename):
-    df = pd.read_excel(filename)
-    df = df.dropna()
-    return df
-
-
 ##partie Agathe: faire une araignée pour un pays sur les x dernières années
 
 df_annees=load_data('Data.xls')
@@ -144,28 +134,3 @@ fig.text(0.5, 0.965, 'différents critères pour les dernières années recensé
              size='large')
 
 plt.show()
-
-### nouvel objectif: histogramme des 3 dernières années des différents critères
-plt.style.use('_mpl-gallery')
-def dernières_années(pays):
-    for group, subdf in by_pays:
-            if group==pays:
-                nb_graph=min(3,subdf.shape[0])
-                df_pays=subdf.tail(nb_graph)
-    return nb_graph,df_pays
-
-def trace(pays):
-     nb_graph,df_pays=dernières_années(pays)
-     if nb_graph==1:
-          y=[df.iloc[[0],[12,13,14,15,16,17,18,19,20]]]
-          x=['Life Ladder','Log GDP','Social Support',
-                    'Healthy life expectancy','Freedom life choices','Generosity',
-                    'Corruption','Positive affect','Negative affect']
-          fig, axes = plt.subplots(1,1,figsize=(10, 5))
-          axes.shape
-          axes.bar(x, y1, width=1, edgecolor="white", linewidth=0.7)
-          axes.set_ylabel('score')
-          
-    elif nb_graph==2:
-
-
