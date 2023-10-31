@@ -4,9 +4,6 @@
 
 
 
-# 3e partie
-# Comparaison de 2 pays à partir de l'excel 'Data.xls'
-# Création d'une fonction qui prend pour argument 2 pays et éventuellement une liste de critères et renvoie un graphique comparatif
 Colonnes = ['Life Ladder  Normalized', 'Log GDP per capita Normalized', 'Social support Normalized', 'Healthy life expectancy at birth Normalized', 'Freedom to make life choices Normalized', 'Generosity Normalized', 'Perceptions of corruption Normalized', 'Positive affect Normalized', 'Negative affect Normalized']
 
 # importation des modules
@@ -14,8 +11,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 df = pd.read_excel('Data.xls')
 
-
-#adélie
+# 1ere partie 
+# normalisation des données, création d'un index
 
 #pour rajouter la colonne Id:
 df['Id'] = df['Country name'] + df['year'].map(str)
@@ -76,6 +73,11 @@ def valeur_bonheur(df, pays, année, a,b,c,d,e,f,g,h,i):
     return df.loc[pays.map(str) + année.map(str), 'Life Ladder Normalized']
 
 
+
+# 3e partie
+# Comparaison de 2 pays à partir de l'excel 'Data.xls'
+# Création d'une fonction qui prend pour argument 2 pays et éventuellement une liste de critères et renvoie un graphique comparatif
+# On peut choisir les critères à comparer parmi les colonnes du fichier excel 'Data.xls' ou la liste Colonnes initialisée au début du code
 
 def comparateur(Id1, Id2, annee, liste_critères = None):
     '''
