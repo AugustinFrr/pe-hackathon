@@ -67,7 +67,8 @@ df['Negative affect Normalized'] = 1 - (df['Negative affect'] - minNA)/(maxNA -m
 
 
 #fonction du bonheur
-
+def valeur_bonheur(df, pays, année, a,b,c,d,e,f,g,h,i):
+    return df.loc[pays.map(str) + année.map(str), 'Life Ladder Normalized']
 
 
 #augustin
@@ -80,8 +81,8 @@ def comparateur(Id1, Id2, annee, liste_critères = None):
     i=0
     for critère in liste_critères:
         plt.figure(figsize=(10,5))
-        plt.bar(i,df.loc[Id1,critère], label=Id1)
-        plt.bar(i,df.loc[Id2,critère], label=Id2)
+        plt.bar(i,df.loc[Id1,critère], label=Id1, alpha=0.5)
+        plt.bar(i,df.loc[Id2,critère], label=Id2, alpha=0.5)
         i += 1
         plt.xlabel('Année')
         plt.ylabel(critère)
